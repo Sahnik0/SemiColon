@@ -65,10 +65,10 @@ const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center">
             <div className="relative">
               <span className="text-2xl font-bold bg-gradient-to-r from-hackathon-blue to-hackathon-pink bg-clip-text text-transparent">
-                SemiColon
+                SemiColon ;
               </span>
               <div className="absolute -top-1 -right-3 w-5 h-5 rounded-full bg-hackathon-yellow flex items-center justify-center text-xs font-bold text-hackathon-blue">
-                23
+                25
               </div>
             </div>
           </Link>

@@ -42,7 +42,7 @@ const About: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="inline-block px-3 py-1 rounded-full bg-hackathon-lightblue text-hackathon-blue font-medium text-sm mb-4">
-            About HackX
+            About SemiColon ;
           </span>
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
             What makes our hackathon
