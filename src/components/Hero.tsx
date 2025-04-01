@@ -36,6 +36,7 @@ const Hero: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Simple animation without cursor tracking
   const astronautStyle = {
     animation: 'floating 5s ease-in-out infinite',
   };
@@ -52,11 +53,11 @@ const Hero: React.FC = () => {
                 </span>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                <span className="block text-hackathon-blue">Playful Hackathon</span>
-                <span className="block text-hackathon-pink wavy-underline">Adventure</span>
+                <span className="block text-hackathon-blue">SemiColon</span>
+                <span className="block text-hackathon-pink wavy-underline">Hackathon</span>
               </h1>
               <p className="text-slate-700 text-lg md:text-xl mt-4">
-                Join us for an exciting 48-hour journey of innovation, creativity, and collaboration. Build something amazing with fellow developers!
+                Join us for an exciting 36-hour journey of innovation, creativity, and collaboration. Build something amazing with fellow developers!
               </p>
             </div>
             
@@ -107,7 +108,7 @@ const Hero: React.FC = () => {
           </div>
           
           <div className="relative h-[300px] md:h-[500px]">
-            {/* Astronaut SVG */}
+            {/* Astronaut SVG with simple animation */}
             <div className="absolute inset-0 flex items-center justify-center" style={astronautStyle}>
               <div className="relative w-3/4 h-3/4">
                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">

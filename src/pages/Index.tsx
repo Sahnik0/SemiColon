@@ -7,6 +7,8 @@ import Timeline from '@/components/Timeline';
 import Tracks from '@/components/Tracks';
 import Judges from '@/components/Judges';
 import Sponsors from '@/components/Sponsors';
+import FAQ from '@/components/FAQ';
+import Team from '@/components/Team';
 import FloatingElements from '@/components/FloatingElements';
 import { toast } from '@/hooks/use-toast';
 
@@ -31,24 +33,36 @@ const Index = () => {
       });
     });
 
-    // Add fade-in animations on scroll
-    const revealElements = document.querySelectorAll('.reveal-content');
-    
-    const revealOnScroll = () => {
-      revealElements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        
-        if (elementTop < windowHeight - 100) {
-          element.classList.remove('hidden');
+    // Add fade-in animations on scroll with IntersectionObserver
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          entry.target.classList.remove('opacity-0');
+          observer.unobserve(entry.target);
         }
       });
     };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
     
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll(); // Initial check
+    const revealElements = document.querySelectorAll('.reveal-section');
+    revealElements.forEach(element => {
+      element.classList.add('opacity-0');
+      observer.observe(element);
+    });
     
-    return () => window.removeEventListener('scroll', revealOnScroll);
+    return () => {
+      revealElements.forEach(element => {
+        observer.unobserve(element);
+      });
+    };
   }, []);
 
   return (
@@ -57,20 +71,26 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <div className="reveal-content hidden">
+        <div className="reveal-section">
           <About />
         </div>
-        <div className="reveal-content hidden">
+        <div className="reveal-section">
           <Timeline />
         </div>
-        <div className="reveal-content hidden">
+        <div className="reveal-section">
           <Tracks />
         </div>
-        <div className="reveal-content hidden">
+        <div className="reveal-section">
           <Judges />
         </div>
-        <div className="reveal-content hidden">
+        <div className="reveal-section">
           <Sponsors />
+        </div>
+        <div className="reveal-section">
+          <Team />
+        </div>
+        <div className="reveal-section">
+          <FAQ />
         </div>
       </main>
       <footer className="bg-hackathon-blue text-white py-8">
@@ -78,7 +98,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4">SemiColon</h3>
-              <p className="text-white/70">A 48-hour hackathon experience designed to inspire innovation and collaboration.</p>
+              <p className="text-white/70">A 36-hour hackathon experience designed to inspire innovation and collaboration.</p>
             </div>
             <div>
               <h3 className="text-lg font-bold mb-4">Quick Links</h3>
@@ -87,6 +107,8 @@ const Index = () => {
                 <li><a href="#timeline" className="text-white/70 hover:text-white transition-colors">Timeline</a></li>
                 <li><a href="#tracks" className="text-white/70 hover:text-white transition-colors">Tracks</a></li>
                 <li><a href="#judges" className="text-white/70 hover:text-white transition-colors">Judges</a></li>
+                <li><a href="#team" className="text-white/70 hover:text-white transition-colors">Team</a></li>
+                <li><a href="#faq" className="text-white/70 hover:text-white transition-colors">FAQ</a></li>
                 <li><a href="#sponsors" className="text-white/70 hover:text-white transition-colors">Sponsors</a></li>
               </ul>
             </div>

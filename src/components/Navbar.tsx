@@ -13,7 +13,9 @@ const Navbar: React.FC = () => {
     { title: 'Timeline', href: '#timeline' },
     { title: 'Tracks', href: '#tracks' },
     { title: 'Judges', href: '#judges' },
+    { title: 'Team', href: '#team' },
     { title: 'FAQ', href: '#faq' },
+    { title: 'Sponsors', href: '#sponsors' },
   ];
 
   useEffect(() => {
@@ -29,6 +31,27 @@ const Navbar: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [scrolled]);
+
+  // Smooth scrolling for in-page navigation
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80, // Offset for navbar height
+          behavior: 'smooth'
+        });
+        
+        // Close mobile menu if open
+        if (mobileMenuOpen) {
+          setMobileMenuOpen(false);
+        }
+      }
+    }
+  };
 
   return (
     <nav
@@ -51,11 +74,12 @@ const Navbar: React.FC = () => {
           </Link>
 
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className="text-slate-700 hover:text-hackathon-pink transition-colors relative group font-medium"
               >
                 {item.title}
@@ -65,15 +89,18 @@ const Navbar: React.FC = () => {
           </div>
 
           <div className="hidden md:block">
-            <AnimatedButton variant="primary">
-              Register Now
-            </AnimatedButton>
+            <Link to="/register">
+              <AnimatedButton variant="primary">
+                Register Now
+              </AnimatedButton>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2 rounded-full bg-hackathon-lightblue text-hackathon-blue"
+            aria-label="Toggle mobile menu"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +132,7 @@ const Navbar: React.FC = () => {
       <div
         className={cn(
           'absolute top-full left-0 right-0 bg-white shadow-lg md:hidden transition-all duration-300 overflow-hidden',
-          mobileMenuOpen ? 'max-h-96' : 'max-h-0'
+          mobileMenuOpen ? 'max-h-screen' : 'max-h-0'
         )}
       >
         <div className="container mx-auto px-4 py-4 space-y-4">
@@ -114,14 +141,19 @@ const Navbar: React.FC = () => {
               key={item.href}
               href={item.href}
               className="block py-2 text-slate-700 hover:text-hackathon-pink transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => {
+                handleNavClick(e, item.href);
+                setMobileMenuOpen(false);
+              }}
             >
               {item.title}
             </a>
           ))}
-          <AnimatedButton variant="primary" className="w-full justify-center">
-            Register Now
-          </AnimatedButton>
+          <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
+            <AnimatedButton variant="primary" className="w-full justify-center">
+              Register Now
+            </AnimatedButton>
+          </Link>
         </div>
       </div>
     </nav>
