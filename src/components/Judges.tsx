@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { cn } from '@/lib/utils';
-import styled from 'styled-components';
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 interface Judge {
   name: string;
@@ -93,8 +92,19 @@ const Judges: React.FC = () => {
   );
 };
 
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
+
 const FlipCard = styled.div`
   perspective: 1000px;
+  border-radius: 10px;
+  padding: 5px;
+  background: linear-gradient(45deg, #ff9f5b, #ff3b77, #6b57ff, #3bb4ff);
+  background-size: 300% 300%;
+  animation: ${gradientAnimation} 3s linear infinite;
   .flip-card-inner {
     position: relative;
     width: 100%;
