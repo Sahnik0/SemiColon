@@ -418,7 +418,7 @@ const Team = () => {
     },
     {
       id: "sponsors",
-      label: "Sponsors",
+      label: "Faculty Coordinator",
       members: [
         {
           name: "Julia Martinez",
