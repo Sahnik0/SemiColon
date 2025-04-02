@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Lottie from 'react-lottie';
+import astronautAnimation from './Ania.json'; // Import the Lottie animation file
 
 const Hero = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -35,9 +37,14 @@ const Hero = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Simple animation without cursor tracking
-  const astronautStyle = {
-    animation: 'floating 5s ease-in-out infinite',
+  // Lottie animation options
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: astronautAnimation,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
   };
 
   return (
@@ -52,8 +59,9 @@ const Hero = () => {
                 </span>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                <span className="block text-hackathon-blue">SemiColon</span>
-                <span className="block text-hackathon-pink wavy-underline">Hackathon</span>
+<span className="text-hackathon-blue">
+    SemiColon <span className="text-hackathon-black">;</span>
+  </span>                <span className="block text-hackathon-pink wavy-underline">Hackathon</span>
               </h1>
               <p className="text-slate-700 text-lg md:text-xl mt-4">
                 Join us for an exciting 36-hour journey of innovation, creativity, and collaboration. Build something amazing with fellow developers!
@@ -104,21 +112,19 @@ const Hero = () => {
           </div>
           
           <div className="relative h-[300px] md:h-[500px]">
-            {/* Astronaut SVG with simple animation */}
-            <div className="absolute inset-0 flex items-center justify-center" style={astronautStyle}>
-              <div className="relative w-3/4 h-3/4">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                  <circle cx="100" cy="100" r="40" fill="#FFFFFF" stroke="#1A2E5A" strokeWidth="3" />
-                  <circle cx="90" cy="90" r="10" fill="#5ECDE3" />
-                  <rect x="85" y="140" width="30" height="40" fill="#FFFFFF" stroke="#1A2E5A" strokeWidth="3" />
-                  <rect x="70" y="100" width="20" height="40" fill="#FFFFFF" stroke="#1A2E5A" strokeWidth="3" />
-                  <rect x="110" y="100" width="20" height="40" fill="#FFFFFF" stroke="#1A2E5A" strokeWidth="3" />
-                  <circle cx="80" cy="190" r="10" fill="#FF5B65" />
-                  <circle cx="120" cy="190" r="10" fill="#FF5B65" />
-                </svg>
-                <div className="absolute top-1/4 right-1/4 w-20 h-20 bg-hackathon-yellow rounded-full opacity-30 animate-pulse-glow"></div>
-              </div>
-            </div>
+            {/* Lottie Animation replacing the SVG */}
+            <LottieWrapper className="absolute inset-0 flex items-center justify-center">
+              <Lottie 
+                options={defaultOptions}
+                height="100%"
+                width="100%"
+                isStopped={false}
+                isPaused={false}
+              />
+              
+              {/* Add a glowing effect behind the animation */}
+              <div className="absolute top-1/4 right-1/4 w-20 h-20 bg-hackathon-yellow rounded-full opacity-30 animate-pulse-glow"></div>
+            </LottieWrapper>
 
             {/* Planet */}
             <div className="absolute top-1/4 right-1/4 w-16 h-16 bg-hackathon-cyan rounded-full opacity-50 animate-bounce-gentle"></div>
@@ -249,6 +255,26 @@ const RotatedButtonWrapper = styled.div`
     padding-bottom: 0px;
     outline: 0;
   }
+`;
+
+// Styled component for the Lottie animation container
+const LottieWrapper = styled.div`
+  position: relative;
+  z-index: 1;
+  
+  @keyframes floating {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  animation: floating 5s ease-in-out infinite;
 `;
 
 export default Hero;
