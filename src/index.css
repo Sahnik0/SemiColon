@@ -6,6 +6,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+  font-family: 'Reiswar';
+  src: url('../reiswar/Reiswar.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -97,8 +106,8 @@
     font-family: 'Orbitron', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Orbitron', sans-serif;
+  h1, h2, h3 {
+    font-family: 'Reiswar', sans-serif;
   }
 }
 
